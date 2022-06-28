@@ -1,0 +1,6 @@
+Nombre del archivo	 Frecuencia (kHz)	 Campo maximo (kA/m)	 SAR (W/g)	 Coercitividad (kA/m)	 Magnetizacion remanente (kA/m)	 Pendiente de calibracion
+256kHz_050dA_100Mss_FG.txt	 2.610651e+02	 1.744012e+01	 1.031514e+02	 5.090446e+00	 3.897337e-02	 -1.160312e+10
+260kHz_050dA_100Mss_FG.txt	 2.614486e+02	 1.744012e+01	 9.725747e+01	 5.334188e+00	 3.540521e-02	 -1.160312e+10
+261kHz_050dA_100Mss_FG.txt	 2.614350e+02	 1.744012e+01	 9.722160e+01	 5.214097e+00	 3.503016e-02	 -1.160312e+10
+262kHz_050dA_100Mss_FG.txt	 2.609588e+02	 1.744012e+01	 6.550155e+01	 5.315567e+00	 2.777975e-02	 -1.160312e+10
+269kHz_050dA_100Mss_FG.txt	 2.610551e+02	 1.744012e+01	 1.080732e+02	 4.619747e+00	 4.028087e-02	 -1.160312e+10

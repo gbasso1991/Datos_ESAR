@@ -1,0 +1,6 @@
+# 19 - 03 - 2021 - 10:45:56
+# Concentración de la muestra: 3.6 g/l
+Nombre del archivo procesado	Tipo de muestra	Frecuencia (kHz)	Temperatura (ºC)	SAR (W/g)	Campo Maximo (kA/m)	Coercitividad (kA/m)	Magnetizacion Remanente (kA/m)	Peor quita de ruido porcentual
+260kHz_02A_100Mss_FG.txt	Ferrogel	261.287644	20.0	20.041166	7.106709	1.786552	0.010438	0.081566
+261kHz_02A_100Mss_FG.txt	Ferrogel	261.304793	20.0	25.815704	7.106709	1.785592	0.013983	0.084574
+262kHz_02A_100Mss_FG.txt	Ferrogel	261.302359	20.0	8.199965	7.106709	0.939489	0.005173	0.101668

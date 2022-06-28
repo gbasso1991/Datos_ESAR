@@ -1,0 +1,7 @@
+# 17 - 05 - 2022 - 15:25:43
+# Concentración de la muestra: 25000 g/m^3
+Nombre del archivo analizado	Frecuencia (kHz)	Campo Maximo (kA/m)	SAR (W/g)	Coercitividad (kA/m)	Remanencia (kA/m)	Peor quita de ruido porcentual
+300kHz_150dA_100Mss_resB00.txt	300.378354	51.884801	46f	0.933437	0.021679	0.000000
+300kHz_150dA_100Mss_resB01.txt	300.384023	51.884801	42f	1.018372	0.018973	0.000000
+300kHz_150dA_100Mss_resB02.txt	300.368846	51.884801	47f	1.002826	0.021000	0.000000
+300kHz_150dA_100Mss_resB03.txt	300.356742	51.884801	35f	0.802129	0.016443	0.000000

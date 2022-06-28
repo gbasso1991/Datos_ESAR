@@ -1,0 +1,4 @@
+Nombre del archivo	 Frecuencia (kHz)	 Campo maximo (kA/m)	 SAR (W/g)	 Coercitividad (kA/m)	 Magnetizacion remanente (kA/m)	 Pendiente de calibracion
+260kHz_150dA_100Mss_Tblanco.txt	 2.612927e+02	 5.188480e+01	 2.088995e+03	 1.032488e+00	 3.497942e-02	 7.483348e+10
+261kHz_150dA_100Mss_Tblanco.txt	 2.613361e+02	 5.188480e+01	 2.395037e+02	 1.707716e+00	 4.323846e-03	 1.947518e+10
+262kHz_150dA_100Mss_Tblanco.txt	 2.612412e+02	 5.188480e+01	 6.388554e+01	 7.101816e-01	 8.716912e-04	 1.556319e+10
