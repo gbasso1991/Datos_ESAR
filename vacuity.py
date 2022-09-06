@@ -7,6 +7,8 @@ Created on Tue Aug 30 2022
 @author: Giuliano
 
 Para levantar los archivos .csv de temperatura gnersados por el sensor Rugged
+IMPORTANTE: debido a temas de sistema operativo los archivos recuperados de 
+la pc ESAR tienen 3 hs de defasaje. 
 
 ATENCION: Getting file creation dates, on the other hand, is fiddly 
           and platform-dependent: 
@@ -33,6 +35,7 @@ import tkinter as tk
 from tkinter import filedialog
 from datetime import datetime
 from scipy.interpolate import BSpline
+
 #% Seleccion Archivos muestra
 root = tk.Tk()
 root.withdraw()
@@ -55,29 +58,39 @@ Parámetros de la medida a partir de nombre del archivo de muestra: 'xxxkHz_yyyd
 frec_nombre=[]      #Frec del nombre del archivo. Luego comparo con frec ajustada
 Idc = []            #Internal direct current en el generador de RF
 samples_per_s = []  #Base temporal 
-fecha_m = []        #fecha de creacion archivo, i.e., de la medida 
+for file in fnames_m:
+    frec_nombre.append(float(file.split('_')[0][:-3])*1000)
+    Idc.append(float(file.split('_')[1][:-2])/10)
+    samples_per_s.append(1e-6/float(file.split('_')[2][:-3]))
 
-for i in range(len(fnames_m)):
-    frec_nombre.append(float(fnames_m[i].split('_')[0][:-3])*1000)
-    Idc.append(float(fnames_m[i].split('_')[1][:-2])/10)
-    samples_per_s.append(1e-6/float(fnames_m[i].split('_')[2][:-3]))
-    fecha_m.append(datetime.fromtimestamp(os.path.getmtime(path_m[i])))
+'''
+Los Horarios de las medidad difieren segun la maquina en la que 
+se tengan los archivos. 
+La fecha posta esta en mi cuaderno 
+                            Paramagneto: 10:40:30 (pm01) a 10:43:26 (pm09_fond)
+                            Agua: 11:07:30 (agua01) a 11:10:44 (agua09_fondo)
+En la Notebook (date modified): 
+                            Paramagneto: 06:40:30 (pm01) a 06:43:26 (pm09_fond)
+                            Agua: 07:07:30 (agua01) a 07:10:44 (agua09_fondo)
+                            
+                            Son 04:00:00 hs de diferencia
+'''
+fecha_m =[] #fecha del archivo de la medida, OJO que es 'modification date' 
+
+for path in path_m:
+    fecha_m.append(datetime.fromtimestamp(os.path.getmtime(path)))
 
 delta_t_m = [] #seg
 for elem in fecha_m:
     delta_t_m.append(int((elem - fecha_m[0]).total_seconds()))
 
-# #%% En windows, me conviene usar mtime, despues de todo, busco un timedelta
-# datetime.fromtimestamp(os.stat(path_m[0]).st_ctime).strftime('%F %H:%M:%S')
-# #%% 
-# datetime.fromtimestamp(os.stat(path_m[0]).st_mtime).strftime('%F %H:%M:%S')
 
-#% Ahora levanto el log de temperaturas en .csv
+#%Ahora levanto el log de temperaturas en .csv
 
-directorio= 'paramagneto/220830_templog_00.csv' #automatizar esto
-#directorio= 'agua/220830_templog_01.csv' #automatizar esto
+if fnmatch.filter(os.listdir(directorio),'*templog*'):
+    dir_templog = os.path.join(directorio,fnmatch.filter(os.listdir(directorio),'*templog*')[0])
 
-data = pd.read_csv(directorio,sep=';',header=5,
+data = pd.read_csv(dir_templog,sep=';',header=5,
                     names=('Timestamp','Temperatura'),usecols=(0,1),
                     decimal=',',engine='python') 
 temperatura = pd.Series(data['Temperatura']).to_numpy(dtype=float)
@@ -89,10 +102,10 @@ timestamp=np.array(timestamp,dtype=str)
 
 #% Datetime de las medidas de muestra en funcion del horario del 1er dato
 
-date_primer_dato = datetime(year=2022,month=8,day=30,
-                            hour=10,minute=39,second=59) #queda automatizar esto 
-#para agua, cambiar por 11:07:11 
-
+#primer dato: pm00 (a RT)
+date_primer_dato = datetime(year=2022,month=8,day=30,hour=10,minute=40,second=14) #queda automatizar esto 
+#para agua, cambiar por 11:06:00 
+#date_primer_dato = datetime(year=2022,month=8,day=30,hour=11,minute=6,second=00) 
 
 time_m = [] 
 for elem in delta_t_m:
@@ -110,12 +123,7 @@ temp_m=np.array(temp_m)
 #% Printeo lo obtenido
 print('Archivos de muestra: ')
 for i, item in enumerate(fnames_m):
-    print(item[-8:-4],' ',str(temp_m[i]) + ' ºC')
-
-
-
-
-
+    print(item.rsplit('_')[-1][:-4],' ',time_m[i],' ',str(temp_m[i]) + ' ºC')
 
 #%% dif temporal en s entre el comienzo del registro y la primer medida de muestra
 #delta_0 = (datetime.strptime(time_m[0],'%H:%M:%S') - datetime.strptime(timestamp[0],'%H:%M:%S')).total_seconds()
@@ -162,6 +170,6 @@ plt.grid()
 plt.xlabel('Campo (A/m)',fontsize=15)
 plt.ylabel('Magnetización (A/m)',fontsize=15)
 plt.suptitle('Ciclos de histéresis en descongelamiento',fontsize=30)
-#plt.savefig('Ciclos_histeresis_descong_bis.png',dpi=300,facecolor='w')
+plt.savefig('Ciclos_histeresis_descong.png',dpi=300,facecolor='w')
 
 # %%
